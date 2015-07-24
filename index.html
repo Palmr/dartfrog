@@ -12,7 +12,8 @@
     <div class="row">
       <div class="twelve columns">
         <textarea id="code"></textarea>
-        <button onclick="javascript:testJDBC();">Run?</button>
+        <button onclick="javascript:runQuery();">Run?</button>
+        <button onclick="javascript:getTableMetaData();">tablemetadata</button>
       </div>
     </div>
     <div class="row">
@@ -23,6 +24,7 @@
     </div>
   </div>
     <script src="connection-config.js" type="text/javascript"></script>
+    <script src="dartfrog-jdbc.js" type="text/javascript"></script>
     <script src="dartfrog.js" type="text/javascript"></script>
   </body>
 </html>

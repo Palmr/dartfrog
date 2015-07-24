@@ -22,40 +22,4 @@ var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
   lineNumbers: true,
   theme: 'monokai'
 });
-
-  
-var jdbc = new (require('jdbc'));
-
-jdbc.initialize(config, function(err, res) {
-  if (err) {
-    console.error("init-error", err);
-		alert("Error: initialising jdbc connection!");
-  }
-});
-
-global.jdbc = jdbc;
 global.editor = editor;
-
-function testJDBC() {
-	jdbc.open(function(err, conn) {
-  if (conn) {
-    jdbc.executeQuery(editor.getValue(), function(err, results) {
-			if (err) {
-				console.error("run-return", err);
-				alert("Error: Failed to run query:" + err.message);
-			}
-			else if (results) {
-				document.getElementById("result").value += JSON.stringify(results) + "\r\n\r\n-------------------------\r\n\r\n";
-			}
-			
-			jdbc.close(function(err) {
-				if(err) {
-					console.log("run-close", err);
-					alert("Error: Failed to close connection after running query!");
-
-				}
-			});
-		});
-  }
-});
-}

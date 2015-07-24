@@ -31,10 +31,9 @@ Then we need to re-install the java sub-module of the jdbc module, so:
  - File open/save
  - Keyboard shortcuts (F9 to run)
 - Nick
- - Add types to jdbc data return
- - Run more than not just selects (e.g. DESCRIBE, INSERT...)
+ - Run more than not just selects (e.g. INSERT...)
  - Prototype Java XML code for JDBC
- - Check for open transactions to highlight uncommited data
+ - Check for open transactions to highlight uncommitted data
 - General
  - Schema browser (at least tables, show column types and data)
  - Statement parsing from codemirror and binds
