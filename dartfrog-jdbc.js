@@ -15,8 +15,7 @@ function runQuery(query, callback) {
   if (conn) {
     jdbc.executeQuery(query, function(err, results) {
 			if (err) {
-				console.error("run-return", err);
-				alert("Error: Failed to run query:" + err.message);
+				console.error("runQuery", err);
 			}
 			else if (results) {
 				callback(results);
@@ -38,8 +37,7 @@ function runUpdate(query, callback) {
   if (conn) {
     jdbc.executeUpdate(query, function(err, rowCount) {
 			if (err) {
-				console.error("run-update", err);
-				alert("Error: Failed to run update:" + err.message);
+				console.error("runUpdate", err);
 			}
 			else if (rowCount) {
         jdbc.commit(function (err) {
@@ -63,17 +61,15 @@ function runUpdate(query, callback) {
 });
 }
 
-function getTableMetaData() {
+function getTableMetaData(tableName, callback) {
 	jdbc.open(function(err, conn) {
   if (conn) {
-    jdbc.getTableMetaData(prompt("Which table?"), function(err, results) {
+    jdbc.getTableMetaData(tableName, function(err, results) {
 			if (err) {
-				console.error("run-return", err);
-				alert("Error: Failed to run getTableMetaData:" + err.message);
+				console.error("getTableMetaData", err);
 			}
 			else if (results) {
-        console.log(results);        
-				dfl.populateResultGrid(results);
+        callback(results);
 			}
 			
 			jdbc.close(function(err) {
