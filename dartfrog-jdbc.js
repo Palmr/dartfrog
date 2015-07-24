@@ -20,7 +20,7 @@ function runQuery() {
 				alert("Error: Failed to run query:" + err.message);
 			}
 			else if (results) {
-				document.getElementById("result").value += JSON.stringify(results) + "\r\n\r\n-------------------------\r\n\r\n";
+				dfl.populateResultGrid(results);
 			}
 			
 			jdbc.close(function(err) {
@@ -43,8 +43,8 @@ function getTableMetaData() {
 				alert("Error: Failed to run getTableMetaData:" + err.message);
 			}
 			else if (results) {
-				document.getElementById("result").value += JSON.stringify(results) + "\r\n\r\n-------------------------\r\n\r\n";
-				console.log(results);
+        console.log(results);        
+				dfl.populateResultGrid(results);
 			}
 			
 			jdbc.close(function(err) {

@@ -50,6 +50,7 @@ $(function () {
 dfl = {
     populateResultGrid: function(results) {
         var columns = Array();
+        var data = results;
         var keys = Object.keys(results[0]);
 
         for(var i = 0; i < keys.length; i++) {
@@ -62,8 +63,14 @@ dfl = {
             });
         };
 
+        for(var i = 0; i < data.length; i++) {
+            for(var j = 0; j < keys.length; j++) {
+                data[i][keys[j]] = data[i][keys[j]].value;
+            };
+        }
+
         resultGrid.columns = columns;  
-        resultGrid.records = results;
+        resultGrid.records = data;
         resultGrid.refresh();    
     }
 }
