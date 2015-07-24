@@ -1,4 +1,4 @@
-# Hotr - Hipster Oracle Toad Replacement
+# dartfrog
 Attempt at making a SQL tool to replace toad.
 Focusing mostly on Oracle and having good XML support as that's what we do mostly at Fivium.
 
