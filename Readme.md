@@ -24,13 +24,22 @@ Then we need to re-install the java sub-module of the jdbc module, so:
 
 
 # TODO
-- Sort out the CSS
-- Look in to plugin-ifying
-- Look at connection pooling
-- Statement parsing from codemirror
-- Check for open transactions to highlight uncommited data
-- Modify/wrap the jdbc module to add proper XML support
-- Spatial data? Very much a nice to have
-- Intellisense/autocomplete would be a good feature to try and demo
-- Mustache template goodness for the rendering of common features (like results)
-- Mock up a simple schema browser with some user_* views and describes
+- Matt
+ - Resizable grid layout
+ - Codemirror styling
+ - Result set grids style
+ - File open/save
+ - Keyboard shortcuts (F9 to run)
+- Nick
+ - Add types to jdbc data return
+ - Run more than not just selects (e.g. DESCRIBE, INSERT...)
+ - Prototype Java XML code for JDBC
+ - Check for open transactions to highlight uncommited data
+- General
+ - Schema browser (at least tables, show column types and data)
+ - Statement parsing from codemirror and binds
+ - Look at making features plugin-ified
+ - Intellisense/autocomplete would be a good feature to try and demo
+ - Mustache template goodness for the rendering of common features (like results)
+ - Spatial data? Very much a nice to have
+ - Look at connection pooling
