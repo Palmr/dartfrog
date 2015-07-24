@@ -9,6 +9,7 @@ global.navigator = window.navigator;
 global.getComputedStyle = window.getComputedStyle;
 
 require('CodeMirror/mode/sql/sql');
+require('CodeMirror/mode/xml/xml');
 var CodeMirror = require('CodeMirror/lib/codemirror');
 
 
