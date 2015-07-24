@@ -10,14 +10,3 @@ global.getComputedStyle = window.getComputedStyle;
 
 require('CodeMirror/mode/sql/sql');
 var CodeMirror = require('CodeMirror/lib/codemirror');
-
-var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-  mode: 'text/x-plsql',
-  lineWrapping: true,
-  extraKeys: {
-    'Ctrl-Space': 'autocomplete'
-  },
-  lineNumbers: true,
-  theme: 'monokai'
-});
-global.editor = editor;
