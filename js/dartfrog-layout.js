@@ -64,6 +64,39 @@ $(function () {
           console.log("No statement found under the cursor?");
         }
       }
+    , 'F11': function() {
+        var statement = getStatementUnderCursor(editor);
+        if (statement && statement.trim().length > 0) {
+          jdbc.open(function(err, conn) {
+            if (conn) {
+              jdbc.execute("EXPLAIN PLAN FOR " + statement.trim(), function(err) {
+                if (err) {
+                  console.error("execute", err);
+                }
+
+                jdbc.executeQuery("select plan_table_output from table(dbms_xplan.display())", function(err, results) {
+                  if (err) {
+                    console.error("runQuery", err);
+                  }
+                  else if (results) {
+                    dfl.populateResultGrid(results, 'results', false);
+                  }
+
+                  jdbc.close(function(err) {
+                    if(err) {
+                      console.log("run-close", err);
+                      alert("Error: Failed to close connection after running query!");
+                    }
+                  });
+                });
+              });
+            }
+          });
+        }
+        else {
+          console.log("No statement found under the cursor?");
+        }
+      }
     },
   });
 
