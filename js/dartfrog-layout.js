@@ -31,7 +31,7 @@ $(function () {
     $('#editor').w2layout({
         name: 'editor',
         panels: [
-            { type: 'main', content: '<button onclick="javascript:runQuery(editor.getValue(),function(results){dfl.populateResultGrid(results,\'results\');});">Run?</button><button onclick="javascript:getTableMetaData();">tablemetadata</button><textarea id="code">select * from portalmgr.web_roles</textarea>',  resizable: true, size: 50},
+            { type: 'main', content: '<button onclick="javascript:runQuery(editor.getValue(),function(results){dfl.populateResultGrid(results,\'results\',false);});">Run?</button><button onclick="javascript:getTableMetaData();">tablemetadata</button><textarea id="code">select * from portalmgr.web_roles</textarea>',  resizable: true, size: 50},
             { type: 'preview', content: 'preview', resizable: true, size: 500
             }            
         ]
@@ -79,7 +79,7 @@ $(function () {
         nodes: [{id: 'xxx', text: 'xxx', expanded: true, nodes: Array()}],    
         onClick: function (event) {
             runQuery("SELECT * FROM "+$('#schema-select').val()+"."+event.target, function(results){
-                dfl.populateResultGrid(results,'tableContents');
+                dfl.populateResultGrid(results,'tableContents',true);
             });
         }              
         }));
@@ -94,7 +94,10 @@ $(function () {
             show: {
                 toolbar: false,
                 footer: false
-            }      
+            },
+            onClick: function(event) {
+              console.log(event);
+            } 
         }));    
 });
 
@@ -130,7 +133,7 @@ dfl = {
         });     
     },
 
-    populateResultGrid: function(results, target) {
+    populateResultGrid: function(results, target, editable) {
         var columns = Array();
         var data = results;
         var keys;
