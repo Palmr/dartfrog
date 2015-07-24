@@ -11,7 +11,7 @@ $(function () {
     $('#layout').w2layout({
         name: 'layout',
         panels: [
-            { type: 'top', size: 50, resizable: false, content: '<button onclick="javascript:testJDBC();">Run?</button>' },
+            { type: 'top', size: 50, resizable: false, content: '        <button onclick="javascript:runQuery();">Run?</button><button onclick="javascript:getTableMetaData();">tablemetadata</button>' },
             { type: 'left', size: 200, resizable: true, content: 'left' },
             { type: 'main', content: '<textarea id="code">select * from portalmgr.web_roles</textarea>',  resizable: true, size: 50},
             { type: 'preview', content: 'preview', resizable: true, size: 500
