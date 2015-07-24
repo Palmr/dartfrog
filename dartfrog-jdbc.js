@@ -10,17 +10,16 @@ jdbc.initialize(config, function(err, res) {
 
 global.jdbc = jdbc;
 
-
-function runQuery() {
+function runQuery(query, callback) {
 	jdbc.open(function(err, conn) {
   if (conn) {
-    jdbc.executeQuery(editor.getValue(), function(err, results) {
+    jdbc.executeQuery(query, function(err, results) {
 			if (err) {
 				console.error("run-return", err);
 				alert("Error: Failed to run query:" + err.message);
 			}
 			else if (results) {
-				dfl.populateResultGrid(results);
+				callback(results);
 			}
 			
 			jdbc.close(function(err) {
