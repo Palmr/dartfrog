@@ -1,0 +1,29 @@
+{
+  "main": "index.html",
+  "name": "dartfrog",
+  "description": "Fivium Hackday 2015 - TOAD replacement",
+  "version": "0.0.1",
+  "keywords": ["dartfrog", "SQL", "Editor"],
+  "window": {
+    "toolbar": true,
+    "resizable": true,
+    "minwidth": 660,
+    "minheight": 500,
+    "width": 960,
+    "height": 600
+  },
+  "dependencies": {
+    "codemirror": "5.4.0",
+    "jdbc": "0.0.13"
+  },
+  "maintainers": [{
+    "name": "Nick Palmer",
+    "email": "nick.palmer@fivium.co.uk",
+    "url": "http://fivium.co.uk"
+  }],
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git", 
+    "url": "https://github.com/fivium/Hotr.git"
+  }
+}
