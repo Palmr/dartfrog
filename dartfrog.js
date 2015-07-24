@@ -28,7 +28,7 @@ function getStatementUnderCursor(codeMirrorEditor) {
 function runStatementUnderCursor() {
   var statement = getStatementUnderCursor(editor);
   if (statement && statement.trim().length > 0) {
-    runQuery(statement.trim(), function(results){dfl.populateResultGrid(results);});
+    runQuery(statement.trim(), function(results){dfl.populateResultGrid(results, 'results', false);});
   }
   else {
     console.log("No statement found under the cursor?");

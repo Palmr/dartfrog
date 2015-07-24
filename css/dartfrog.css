@@ -13,3 +13,11 @@ html, body {
 .CodeMirror {
   height: 100%;
 }
+
+#schema {
+  display: none;
+}
+
+#schema-select {
+  width: 100%;
+}
