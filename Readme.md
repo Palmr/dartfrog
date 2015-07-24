@@ -31,6 +31,7 @@ Then we need to re-install the java sub-module of the jdbc module, so:
  - File open/save
  - Keyboard shortcuts (F9 to run)
 - Nick
+ - Deal with LOB columns
  - Run more than not just selects (e.g. INSERT...)
  - Prototype Java XML code for JDBC
  - Check for open transactions to highlight uncommitted data

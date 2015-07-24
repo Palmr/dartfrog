@@ -36,9 +36,9 @@ $(function () {
     $('#layout').w2layout({
         name: 'layout',
         panels: [
-            { type: 'top', size: 50, resizable: false, content: ' <button onclick="javascript:runQuery(editor.getValue(),function(results){dfl.populateResultGrid(results);});">Run?</button><button onclick="javascript:getTableMetaData();">tablemetadata</button>' },
+            { type: 'top', size: 50, resizable: false, content: ' <button onclick="javascript:runStatementUnderCursor();">Run?</button><button onclick="javascript:getTableMetaData();">tablemetadata</button>' },
             { type: 'left', size: 200, resizable: true, content: 'left' },
-            { type: 'main', content: '<textarea id="code">select * from portalmgr.web_roles</textarea>',  resizable: true, size: 50},
+            { type: 'main', content: '<textarea id="code">select * from dual</textarea>',  resizable: true, size: 50},
             { type: 'preview', content: 'preview', resizable: true, size: 500
             }            
         ]
@@ -55,6 +55,18 @@ $(function () {
         lineNumbers: true,
         matchBrackets : true,
         autofocus: true,
+        extraKeys: {
+          'F9': runStatementUnderCursor
+        , 'F10': function() {
+            var statement = getStatementUnderCursor(editor);
+            if (statement && statement.trim().length > 0) {
+              runUpdate(statement.trim(), function(rowCount){console.log(rowCount);});
+            }
+            else {
+              console.log("No statement found under the cursor?");
+            }
+          }
+        },
       });  
 
     $('#schema-select').change(function() {
@@ -66,7 +78,7 @@ $(function () {
 dfl = {
 
     getSchemaList: function() {
-        runQuery("SELECT username FROM dba_users ORDER BY username ASC", function(results) {
+        runQuery("SELECT username FROM all_users ORDER BY username ASC", function(results) {
             for(var i = 0; i < results.length; i++) {
                 var username = results[i].USERNAME.value;
                $('#schema-select').append('<option value="'+username+'">'+username+'</option>') 

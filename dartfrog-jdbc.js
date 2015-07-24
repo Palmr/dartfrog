@@ -33,6 +33,36 @@ function runQuery(query, callback) {
 });
 }
 
+function runUpdate(query, callback) {
+  jdbc.open(function(err, conn) {
+  if (conn) {
+    jdbc.executeUpdate(query, function(err, rowCount) {
+			if (err) {
+				console.error("run-update", err);
+				alert("Error: Failed to run update:" + err.message);
+			}
+			else if (rowCount) {
+        jdbc.commit(function (err) {
+          if (err) {
+            console.error("Failed to commit?", err);
+          }
+          else {
+            callback(rowCount);
+          }
+
+          jdbc.close(function(err) {
+            if(err) {
+              console.log("run-close", err);
+              alert("Error: Failed to close connection after running update!");
+            }
+          });
+        });
+			}
+		});
+  }
+});
+}
+
 function getTableMetaData() {
 	jdbc.open(function(err, conn) {
   if (conn) {
