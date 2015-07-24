@@ -25,18 +25,17 @@ Then we need to re-install the java sub-module of the jdbc module, so:
 
 # TODO
 - Matt
- - Resizable grid layout
- - Codemirror styling
- - Result set grids style
  - File open/save
- - Keyboard shortcuts (F9 to run)
+ - Restyle XML editor
+ - Loading animation
+ - Schema browser showing table metadata in tab
 - Nick
+ - DBMS_OUTPUT?
+ - Binds
  - Deal with LOB columns
- - Run more than not just selects (e.g. INSERT...)
- - Prototype Java XML code for JDBC
+ - Get timing info on jdbc lib
  - Check for open transactions to highlight uncommitted data
 - General
- - Schema browser (at least tables, show column types and data)
  - Statement parsing from codemirror and binds
  - Look at making features plugin-ified
  - Intellisense/autocomplete would be a good feature to try and demo
