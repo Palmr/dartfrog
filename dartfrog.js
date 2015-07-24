@@ -26,16 +26,6 @@ var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
   
 var jdbc = new (require('jdbc'));
 
-var config = {
-  libpath: 'jars/ojdbc6-11.2.0.4.jar',
-  libs: ['jars/xdb6-11.2.0.4.jar', 'jars/xmlparserv2-11.2.0.3.jar'],
-  drivername: 'oracle.jdbc.driver.OracleDriver',
-  url: 'jdbc:oracle:thin:@localhost:1521:xe',
-  user: 'hr',
-  password: 'dev',
-};
-
-
 jdbc.initialize(config, function(err, res) {
   if (err) {
     console.error("init-error", err);
