@@ -178,9 +178,11 @@ function showTableSchemaBrowserView(tableName) {
 
 function toadMode() {
   $("#feelsbad").show();
+  $('body').addClass('toadmode');
   alert("Unexpected error occurred");
   alert("Pepe has become unresponsive");
   alert("Error: No error");
+  alert("Good, good. Let the rage flow through you.");
   alert("Hope you saved your work!");
   alert("Pepe.exe has encountered a serious error and needs to shut down");
   var win = gui.Window.open('bsod.html', {
@@ -188,6 +190,7 @@ function toadMode() {
     fullscreen: true
   });
   $("#feelsbad").hide();
+  $('body').removeClass('toadmode');
 }
 
 function formatEditorSQL() {

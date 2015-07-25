@@ -163,7 +163,7 @@ $(function () {
         w2popup.open({
           title   : 'Edit ' + column.name + ' on ' + currentTableMetadata.table_name,
           body    : '<textarea id="editorCM">' + escapeHtml(results[0][column.name].value) + '</textarea>',
-          buttons : (currentTableMetadata.columns[event.column].type == "SYS.XMLTYPE"?'<button onClick="javascript:schemaEditor.setValue(vkbeautify.xml(schemaEditor.getValue()));" class="icon-magic-wand">format</button>':'') + '<button onClick="javascript:w2popup.close();">Save</button><button onClick="javascript:runUpdate(\'' + updateStatement + '\',  function(rowCount){console.log(rowCount);showTableSchemaBrowserView(\''+currentTableMetadata.table_name+'\');});w2popup.close();">Commit</button>',
+          buttons : (currentTableMetadata.columns[event.column].type == "SYS.XMLTYPE"?'<button onClick="javascript:schemaEditor.setValue(vkbeautify.xml(schemaEditor.getValue()));" class="icon-magic-wand">Format</button>':'') + '<button onClick="javascript:w2popup.close();">Save</button><button onClick="javascript:runUpdate(\'' + updateStatement + '\',  function(rowCount){console.log(rowCount);showTableSchemaBrowserView(\''+currentTableMetadata.table_name+'\');});w2popup.close();">Commit</button>',
           showClose: false,
           modal: true,
           width: 1000,
