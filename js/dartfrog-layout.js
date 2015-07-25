@@ -66,10 +66,15 @@ $(function () {
     matchBrackets : true,
     autofocus: true,
     theme: 'neat',
+    indentUnit: 2,
     extraKeys: {
       'F9': runStatementUnderCursor
     , 'F10': runUpdateUnderCurrentCursor
     , 'F11': runExplianPlanUnderCurrentCursor
+    , Tab: function(cm) {
+        var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+        cm.replaceSelection(spaces, "end", "+input");
+      }
     },
   });
 
@@ -152,7 +157,15 @@ $(function () {
           lineNumbers: true,
           matchBrackets : true,
           autofocus: true,
-          theme: 'neat'
+          theme: 'neat',
+          parserfile: "parsexml.js",
+          indentUnit: 2,
+          extraKeys: {
+              Tab: function(cm) {
+                  var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+                  cm.replaceSelection(spaces, "end", "+input");
+              }
+          }          
         });
       });
     }
@@ -253,7 +266,8 @@ dfl = {
           if(err){
             alert(err);
           } else {
-            editor.getDoc().setValue(data.toString())
+            editor.getDoc().setValue(data.toString());
+            $('#save').removeClass().addClass('icon-floppy-disk').prop( "disabled", true );
           }
         })
       });
