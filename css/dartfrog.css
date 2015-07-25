@@ -132,6 +132,11 @@ button:hover {
   color: #fff; 
 }
 
+#plsql {
+  background: #8CC63F;
+  color: #fff;
+}
+
 #explain {
   background: rgb(249, 180, 2);
   color: #fff;
@@ -293,7 +298,8 @@ button:hover {
 
 .w2ui-popup .w2ui-msg-title {
   background: #25A1D7;
-  color: #eee;
+  color: #fff;
+  font-weight: bold;
   border-radius: 0;
   font-size: 1.2em;
   height: auto;
