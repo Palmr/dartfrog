@@ -8,6 +8,7 @@ function escapeHtml(unsafe) {
  }
 
 var editor = null;
+var schemaEditor = null;
 var schemaSelectList = '';
 var currentTableMetadata;
 var currentTableData;
@@ -32,10 +33,12 @@ $(function () {
   });
 
   var toolbar = '<div class="toolbar">'
-    +'<button onclick="javascript:runStatementUnderCursor();dfl.startGameTimer();" id="run" class="icon-play3">Run</button>'
+    +'<button onclick="javascript:runStatementUnderCursor();dfl.startGameTimer();" id="run" class="icon-play3">SQL</button>'
+    +'<button onclick="javascript:runPLSQLUnderCursor();" id="plsql" class="icon-power">PL/SQL</button>'
     +'<button onclick="javascript:runExplianPlanUnderCurrentCursor();" id="explain" class="icon-truck">Plan</button>'
     +'<button onclick="javascript:dfl.chooseFile(\'#fileDialog\');" id="open" class="icon-folder-open">Open</button>'
     +'<button onclick="javascript:dfl.saveFile(null);" id="save" class="icon-floppy-disk">Save</button>'
+    +'<button onclick="javascript:toadMode();" id="toadMode" class="icon-crying" style="float:right;padding: 0.5em 0em 0.7em 0em;"></button>'
     +'<button onclick="javascript:dfl.saveAs();" id="saveAs">Save As...</button><span id="filePath"></span>'
     +'</div>'; 
 
@@ -58,7 +61,7 @@ $(function () {
   }));
 
   editor = CodeMirror.fromTextArea(document.getElementById('code'),{
-    mode: 'text/x-sql',
+    mode: 'text/x-plsql',
     indentWithTabs: true,
     smartIndent: true,
     lineNumbers: true,
@@ -99,22 +102,7 @@ $(function () {
     img: null,
     nodes: [{id: 'xxx', text: 'xxx', expanded: true, nodes: Array()}],
     onClick: function (event) {
-      var tableName = $('#schema-select').val()+"."+event.target;
-      var columnNames = "rowid";
-      currentTableMetadata = null;
-      getTableMetaData(tableName, function (metadataResults) {
-        currentTableMetadata = metadataResults;
-        for (var c = 0; c < currentTableMetadata.columns.length; c++) {
-          columnNames += ", " + currentTableMetadata.columns[c].name;
-        }
-      });
-
-      setTimeout(function() {
-      runQuery("SELECT " + columnNames + " FROM " + tableName, function(results){
-        currentTableData = results;
-        dfl.populateResultGrid(currentTableData, 'tableContents', true);
-      });
-      }, 100);
+      showTableSchemaBrowserView($('#schema-select').val()+"."+event.target);
     }
   }));
 
@@ -134,25 +122,51 @@ $(function () {
       var column = currentTableMetadata.columns[event.column];
       
       runQuery("SELECT " + column.name + " FROM " + currentTableMetadata.table_name + " WHERE rowid = '" + event.recid + "'", function(results){
+        var updateStatement = 'UPDATE ' + currentTableMetadata.table_name + ' SET ' + column.name + ' = ';
+        if (currentTableMetadata.columns[event.column].type == "SYS.XMLTYPE") {
+          updateStatement += 'XMLTYPE(\\\'\'+schemaEditor.getValue()+\'\\\')';
+        }
+        else if (currentTableMetadata.columns[event.column].type == "NUMBER") {
+          updateStatement += '\'+schemaEditor.getValue()+\'';
+        }
+        else {
+          updateStatement += '\\\'\'+schemaEditor.getValue()+\'\\\'';
+        }
+        updateStatement += ' WHERE rowid = \\\'' + event.recid + '\\\'';
+        
         w2popup.open({
           title   : 'Edit ' + column.name + ' on ' + currentTableMetadata.table_name,
           body    : '<textarea id="editorCM">' + escapeHtml(results[0][column.name].value) + '</textarea>',
-          buttons : '<button disabled="disabled">Save</button><button onClick="javascript:w2popup.close();">Commit</button>',
+          buttons : '<button disabled="disabled">Save</button><button onClick="javascript:runUpdate(\'' + updateStatement + '\',  function(rowCount){console.log(rowCount);showTableSchemaBrowserView(\''+currentTableMetadata.table_name+'\');});w2popup.close();">Commit</button>',
           showClose: false,
           modal: true,
           width: 1000,
           height: 800
         });
         
-        CodeMirror.fromTextArea(document.getElementById('editorCM'),{
-          mode: 'application/xml',
-          indentWithTabs: true,
-          smartIndent: true,
-          lineNumbers: true,
-          matchBrackets : true,
-          autofocus: true,
-          theme: 'neat'
-        });
+        if (currentTableMetadata.columns[event.column].type == "SYS.XMLTYPE") {
+          schemaEditor = CodeMirror.fromTextArea(document.getElementById('editorCM'),{
+            mode: 'application/xml',
+            indentWithTabs: false,
+            smartIndent: true,
+            lineNumbers: true,
+            matchBrackets : true,
+            matchTags: {bothTags: true},
+            autofocus: true,
+            theme: 'neat'
+          });
+        }
+        else {
+          schemaEditor = CodeMirror.fromTextArea(document.getElementById('editorCM'),{
+            mode: 'text/plain',
+            indentWithTabs: false,
+            smartIndent: true,
+            lineNumbers: true,
+            matchBrackets : true,
+            autofocus: true,
+            theme: 'neat'
+          });
+        }
       });
     }
   }));

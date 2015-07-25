@@ -13,7 +13,8 @@
   },
   "dependencies": {
     "codemirror": "5.4.0",
-    "jdbc": "0.0.13"
+    "jdbc": "0.0.13",
+    "bluescreenofdeath": "0.0.2"
   },
   "maintainers": [{
     "name": "Nick Palmer",
