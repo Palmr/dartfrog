@@ -71,8 +71,9 @@ $(function () {
     theme: 'neat',
     indentUnit: 2,
     extraKeys: {
-      'F9': runStatementUnderCursor
-    , 'F10': runUpdateUnderCurrentCursor
+      'Ctrl-F': formatEditorSQL
+    , 'F9': runStatementUnderCursor
+    , 'F10': runPLSQLUnderCursor
     , 'F11': runExplianPlanUnderCurrentCursor
     , Tab: function(cm) {
         var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
@@ -162,7 +163,7 @@ $(function () {
         w2popup.open({
           title   : 'Edit ' + column.name + ' on ' + currentTableMetadata.table_name,
           body    : '<textarea id="editorCM">' + escapeHtml(results[0][column.name].value) + '</textarea>',
-          buttons : '<button disabled="disabled">Save</button><button onClick="javascript:runUpdate(\'' + updateStatement + '\',  function(rowCount){console.log(rowCount);showTableSchemaBrowserView(\''+currentTableMetadata.table_name+'\');});w2popup.close();">Commit</button>',
+          buttons : (currentTableMetadata.columns[event.column].type == "SYS.XMLTYPE"?'<button onClick="javascript:schemaEditor.setValue(vkbeautify.xml(schemaEditor.getValue()));" class="icon-magic-wand">format</button>':'') + '<button onClick="javascript:w2popup.close();">Save</button><button onClick="javascript:runUpdate(\'' + updateStatement + '\',  function(rowCount){console.log(rowCount);showTableSchemaBrowserView(\''+currentTableMetadata.table_name+'\');});w2popup.close();">Commit</button>',
           showClose: false,
           modal: true,
           width: 1000,
@@ -182,10 +183,13 @@ $(function () {
             parserfile: "parsexml.js",
             indentUnit: 2,
             extraKeys: {
-                Tab: function(cm) {
-                    var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
-                    cm.replaceSelection(spaces, "end", "+input");
-                }
+              'Ctrl-F': function() {
+                schemaEditor.setValue(vkbeautify.xml(schemaEditor.getValue()));
+              }
+            , Tab: function(cm) {
+                var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+                cm.replaceSelection(spaces, "end", "+input");
+              }
             }   
           });
         }

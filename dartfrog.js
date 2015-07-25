@@ -66,7 +66,7 @@ function runPLSQLUnderCursor() {
             if (err) {
               console.error("execute", err);
             }
-            
+
             // Run the getter loop
             jdbc.executeUpdateWithBinds(
               "declare " +
@@ -89,20 +89,20 @@ function runPLSQLUnderCursor() {
               if (err) {
                 console.error("getting output", err);
               }
-              
+
               var results = [];
               var outBufferLines = outbinds.buffer.split("\n");
               for (var line in outBufferLines){
                 results.push({"DBMS_OUTPUT": {"type": "VARCHAR2", "value": outBufferLines[line]}});
               }
               dfl.populateResultGrid(results, 'results', false);
-              
+
               // Disable dbms_output
               jdbc.executeUpdate("begin dbms_output.disable; end;", function(err, rowcount) {
                 if (err) {
                   console.error("dbms_output.disable", err);
                 }
-                
+
                 // close connection
                 jdbc.close(function(err) {
                   if(err) {
@@ -188,4 +188,13 @@ function toadMode() {
     fullscreen: true
   });
   $("#feelsbad").hide();
+}
+
+function formatEditorSQL() {
+  var formattedEditor = '';
+  var statements = editor.getValue().split(/^\/$/m);
+  for (var s = 0; s < statements.length; s++) {
+    formattedEditor += vkbeautify.sql(statements[s]) + "\r\n/\r\n\r\n";
+  }
+  editor.setValue(formattedEditor);
 }
