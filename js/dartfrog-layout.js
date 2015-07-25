@@ -87,7 +87,26 @@ $(function () {
     name: 'schema',
     panels: [
       { type: 'left', size: 300, resizable: true, content: 'left' },
-      { type: 'main', resizable: true ,
+      { type: 'main', content: 
+        $().w2grid({
+            name: 'metadata',
+            header: 'Metadata',
+            show: {
+              toolbar: false,
+              footer: false
+            },
+            columns: [
+              { field: 'name', caption: 'Name', size: '16.6%' },
+              { field: 'type', caption: 'Type', size: '16.6%' },
+              { field: 'scale', caption: 'Scale', size: '16.6%' },
+              { field: 'precision', caption: 'Precision', size: '16.6%' },
+              { field: 'nullable', caption: 'Nullable', size: '16.6%' },
+              { field: 'autoinc', caption: 'Auto-increment', size: '16.6%' },
+            ],
+            records: Array()
+          })
+      },
+      { type: 'preview', resizable: true, size: 600,
       onResize: function() { dfl.getSchemaList(); }}
     ],
   });
@@ -96,7 +115,7 @@ $(function () {
     name: 'sidebar',
     panels: [
       {type: 'top', content: schemaSelectList, size: 25},
-      {type: 'main', content: 'main'},
+      {type: 'main', content: ''},
     ]
   }));
 
@@ -112,6 +131,7 @@ $(function () {
         currentTableMetadata = metadataResults;
         for (var c = 0; c < currentTableMetadata.columns.length; c++) {
           columnNames += ", " + currentTableMetadata.columns[c].name;
+          dfl.populateTableMetadataview(currentTableMetadata);
         }
       });
 
@@ -128,7 +148,7 @@ $(function () {
     dfl.getTableList();
   });
 
-  w2ui['schema'].content('main', $().w2grid({
+  w2ui['schema'].content('preview', $().w2grid({
     name: 'tableContents',
     header: 'Table',
     show: {
@@ -253,6 +273,24 @@ dfl = {
     w2ui[target].columns = columns;
     w2ui[target].records = data;
     w2ui[target].refresh();
+  },
+
+  populateTableMetadataview: function(metadata) {
+    var recs = Array()
+
+    for(var i = 0; i<metadata.column_count; i++) {
+      recs.push({
+        name: metadata.columns[i].name,
+        type: metadata.columns[i].type,
+        precision: metadata.columns[i].precision,
+        scale: metadata.columns[i].scale,
+        nullable: (metadata.columns[i].nullable == 0) ? 'No' : 'Yes',
+        autoinc: metadata.columns[i].auto_increment,
+      })
+    }
+
+    w2ui['metadata'].records = recs;
+    w2ui['metadata'].refresh();
   },
 
   chooseFile: function(name) {
