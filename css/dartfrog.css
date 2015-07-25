@@ -27,8 +27,8 @@ html, body {
 }
 
 #splash {
-  display: none;
-  background: #222;
+
+  background: #fff;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -38,14 +38,15 @@ html, body {
   background-image: url('../img/logo.svg');
   background-repeat: no-repeat;
   background-position: center center;
-  -webkit-animation: fadeout 1s;
-  -webkit-animation-delay: 1s;
+  background-size: 50% auto;
+  -webkit-animation: fadeout 2s;
+  -webkit-animation-delay: 1.5s;
   -webkit-animation-fill-mode: forwards
 }
 
 @-webkit-keyframes fadeout {
-  0% {opacity: 1; z-index: 1000;}
-  50% {opacity: 0; z-index: 1000;}
+  0% {opacity: 1; z-index: 1000; background-size: 50% auto;}
+  50% {opacity: 0; z-index: 1000; background-size: 150% auto;}
   100% {opacity: 0; z-index: -1000;}
 }
 
@@ -98,15 +99,21 @@ html, body {
 button {
   border: 0;
   font-size: 1.2em;
-  background: #fdfdfd;
+  background: transparent;
   color: #25A1D7;
   padding: 0.5em 1.3em 0.7em 1.3em;
   font-family: 'Segoe UI', sans-serif !important;
   transition: opacity 0.5s;
+  cursor: pointer;
 }
 
 button:disabled {
   opacity: 0.3;
+}
+
+button:hover {
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 #filePath {
@@ -313,6 +320,10 @@ button:disabled {
   bottom: 3.1em;
 }
 
+.w2ui-popup .CodeMirror {
+  height: 100%;
+}
+
 /* Game based on http://jsfiddle.net/ova777/kFxja/ */
 #game-popup {
   z-index: 1000;
@@ -356,4 +367,13 @@ button:disabled {
 }
 #game .brick.now {
     background: #8CC63F;
+}
+
+#feelsbad {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 20%;
+  z-index: 1000;
+  display: none;
 }

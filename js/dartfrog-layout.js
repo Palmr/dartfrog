@@ -36,6 +36,7 @@ $(function () {
     +'<button onclick="javascript:runStatementUnderCursor();dfl.startGameTimer();" id="run" class="icon-play3">SQL</button>'
     +'<button onclick="javascript:runPLSQLUnderCursor();" id="plsql" class="icon-power">PL/SQL</button>'
     +'<button onclick="javascript:runExplianPlanUnderCurrentCursor();" id="explain" class="icon-truck">Plan</button>'
+    +'<button onclick="javascript:editor.getDoc().setValue(\'\');currentFilePath=null;$(\'#filePath\').text(\'\');" id="new-file" class="icon-plus">New</button>'    
     +'<button onclick="javascript:dfl.chooseFile(\'#fileDialog\');" id="open" class="icon-folder-open">Open</button>'
     +'<button onclick="javascript:dfl.saveFile(null);" id="save" class="icon-floppy-disk">Save</button>'
     +'<button onclick="javascript:toadMode();" id="toadMode" class="icon-crying" style="float:right;padding: 0.5em 0em 0.7em 0em;"></button>'
@@ -68,10 +69,15 @@ $(function () {
     matchBrackets : true,
     autofocus: true,
     theme: 'neat',
+    indentUnit: 2,
     extraKeys: {
       'F9': runStatementUnderCursor
     , 'F10': runUpdateUnderCurrentCursor
     , 'F11': runExplianPlanUnderCurrentCursor
+    , Tab: function(cm) {
+        var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+        cm.replaceSelection(spaces, "end", "+input");
+      }
     },
   });
 
@@ -84,7 +90,26 @@ $(function () {
     name: 'schema',
     panels: [
       { type: 'left', size: 300, resizable: true, content: 'left' },
-      { type: 'main', resizable: true ,
+      { type: 'main', content: 
+        $().w2grid({
+            name: 'metadata',
+            header: 'Metadata',
+            show: {
+              toolbar: false,
+              footer: false
+            },
+            columns: [
+              { field: 'name', caption: 'Name', size: '16.6%' },
+              { field: 'type', caption: 'Type', size: '16.6%' },
+              { field: 'scale', caption: 'Scale', size: '16.6%' },
+              { field: 'precision', caption: 'Precision', size: '16.6%' },
+              { field: 'nullable', caption: 'Nullable', size: '16.6%' },
+              { field: 'autoinc', caption: 'Auto-increment', size: '16.6%' },
+            ],
+            records: Array()
+          })
+      },
+      { type: 'preview', resizable: true, size: 600,
       onResize: function() { dfl.getSchemaList(); }}
     ],
   });
@@ -93,7 +118,7 @@ $(function () {
     name: 'sidebar',
     panels: [
       {type: 'top', content: schemaSelectList, size: 25},
-      {type: 'main', content: 'main'},
+      {type: 'main', content: ''},
     ]
   }));
 
@@ -110,14 +135,14 @@ $(function () {
     dfl.getTableList();
   });
 
-  w2ui['schema'].content('main', $().w2grid({
+  w2ui['schema'].content('preview', $().w2grid({
     name: 'tableContents',
     header: 'Table',
     show: {
       toolbar: false,
       footer: false
     },
-    onClick: function(event) {
+    onDblClick: function(event) {
       console.log(event);
       var column = currentTableMetadata.columns[event.column];
       
@@ -153,7 +178,15 @@ $(function () {
             matchBrackets : true,
             matchTags: {bothTags: true},
             autofocus: true,
-            theme: 'neat'
+            theme: 'neat',
+            parserfile: "parsexml.js",
+            indentUnit: 2,
+            extraKeys: {
+                Tab: function(cm) {
+                    var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+                    cm.replaceSelection(spaces, "end", "+input");
+                }
+            }   
           });
         }
         else {
@@ -164,7 +197,14 @@ $(function () {
             lineNumbers: true,
             matchBrackets : true,
             autofocus: true,
-            theme: 'neat'
+            theme: 'neat',
+            indentUnit: 2,
+            extraKeys: {
+                Tab: function(cm) {
+                    var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+                    cm.replaceSelection(spaces, "end", "+input");
+                }
+            }   
           });
         }
       });
@@ -255,6 +295,24 @@ dfl = {
     w2ui[target].refresh();
   },
 
+  populateTableMetadataview: function(metadata) {
+    var recs = Array()
+
+    for(var i = 0; i<metadata.column_count; i++) {
+      recs.push({
+        name: metadata.columns[i].name,
+        type: metadata.columns[i].type,
+        precision: metadata.columns[i].precision,
+        scale: metadata.columns[i].scale,
+        nullable: (metadata.columns[i].nullable == 0) ? 'No' : 'Yes',
+        autoinc: metadata.columns[i].auto_increment,
+      })
+    }
+
+    w2ui['metadata'].records = recs;
+    w2ui['metadata'].refresh();
+  },
+
   chooseFile: function(name) {
       var chooser = $(name);
       chooser.unbind('change');
@@ -266,7 +324,8 @@ dfl = {
           if(err){
             alert(err);
           } else {
-            editor.getDoc().setValue(data.toString())
+            editor.getDoc().setValue(data.toString());
+            $('#save').removeClass().addClass('icon-floppy-disk').prop( "disabled", true );
           }
         })
       });
