@@ -27,8 +27,8 @@ html, body {
 }
 
 #splash {
-  display: none;
-  background: #222;
+
+  background: #fff;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -38,14 +38,15 @@ html, body {
   background-image: url('../img/logo.svg');
   background-repeat: no-repeat;
   background-position: center center;
-  -webkit-animation: fadeout 1s;
-  -webkit-animation-delay: 1s;
+  background-size: 50% auto;
+  -webkit-animation: fadeout 2s;
+  -webkit-animation-delay: 1.5s;
   -webkit-animation-fill-mode: forwards
 }
 
 @-webkit-keyframes fadeout {
-  0% {opacity: 1; z-index: 1000;}
-  50% {opacity: 0; z-index: 1000;}
+  0% {opacity: 1; z-index: 1000; background-size: 50% auto;}
+  50% {opacity: 0; z-index: 1000; background-size: 150% auto;}
   100% {opacity: 0; z-index: -1000;}
 }
 
@@ -366,4 +367,13 @@ button:hover {
 }
 #game .brick.now {
     background: #8CC63F;
+}
+
+#feelsbad {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 20%;
+  z-index: 1000;
+  display: none;
 }
