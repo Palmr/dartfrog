@@ -34,6 +34,7 @@ $(function () {
   var toolbar = '<div class="toolbar">'
     +'<button onclick="javascript:runStatementUnderCursor();dfl.startGameTimer();" id="run" class="icon-play3">Run</button>'
     +'<button onclick="javascript:runExplianPlanUnderCurrentCursor();" id="explain" class="icon-truck">Plan</button>'
+    +'<button onclick="javascript:editor.getDoc().setValue(\'\');currentFilePath=null;$(\'#filePath\').text(\'\');" id="new-file" class="icon-plus">New</button>'    
     +'<button onclick="javascript:dfl.chooseFile(\'#fileDialog\');" id="open" class="icon-folder-open">Open</button>'
     +'<button onclick="javascript:dfl.saveFile(null);" id="save" class="icon-floppy-disk">Save</button>'
     +'<button onclick="javascript:dfl.saveAs();" id="saveAs">Save As...</button><span id="filePath"></span>'
