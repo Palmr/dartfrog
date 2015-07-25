@@ -6,7 +6,7 @@
   "keywords": ["dartfrog", "SQL", "Editor"],
   "window": {
     "icon": "img/icon.png",
-    "toolbar": true,
+    "toolbar": false,
     "resizable": true,
     "width": 1200,
     "height": 900

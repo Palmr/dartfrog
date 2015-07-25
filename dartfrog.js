@@ -164,6 +164,7 @@ function showTableSchemaBrowserView(tableName) {
     currentTableMetadata = metadataResults;
     for (var c = 0; c < currentTableMetadata.columns.length; c++) {
       columnNames += ", " + currentTableMetadata.columns[c].name;
+      dfl.populateTableMetadataview(currentTableMetadata);
     }
   });
 
@@ -176,12 +177,15 @@ function showTableSchemaBrowserView(tableName) {
 }
 
 function toadMode() {
+  $("#feelsbad").show();
   alert("Unexpected error occurred");
   alert("Pepe has become unresponsive");
   alert("Error: No error");
   alert("Hope you saved your work!");
   alert("Pepe.exe has encountered a serious error and needs to shut down");
   var win = gui.Window.open('bsod.html', {
+    "toolbar": false,
     fullscreen: true
   });
+  $("#feelsbad").hide();
 }
