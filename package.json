@@ -6,15 +6,14 @@
   "keywords": ["dartfrog", "SQL", "Editor"],
   "window": {
     "icon": "img/icon.png",
-    "toolbar": false,
+    "toolbar": true,
     "resizable": true,
     "width": 1200,
     "height": 900
   },
   "dependencies": {
     "codemirror": "5.4.0",
-    "jdbc": "0.0.13",
-    "bluescreenofdeath": "0.0.2"
+    "jdbc": "0.0.13"
   },
   "maintainers": [{
     "name": "Nick Palmer",
