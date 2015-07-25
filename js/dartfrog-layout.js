@@ -68,7 +68,7 @@ $(function () {
     lineNumbers: true,
     matchBrackets : true,
     autofocus: true,
-    theme: 'neat',
+    theme: 'mdn-like',
     indentUnit: 2,
     extraKeys: {
       'F9': runStatementUnderCursor
@@ -178,7 +178,7 @@ $(function () {
             matchBrackets : true,
             matchTags: {bothTags: true},
             autofocus: true,
-            theme: 'neat',
+            theme: 'mdn-like',
             parserfile: "parsexml.js",
             indentUnit: 2,
             extraKeys: {
