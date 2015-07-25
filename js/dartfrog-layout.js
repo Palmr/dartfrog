@@ -11,6 +11,7 @@ var editor = null;
 var schemaSelectList = '';
 var currentTableMetadata;
 var currentTableData;
+var currentFilePath;
 
 $(function () {
   // Set up tabs
@@ -32,7 +33,7 @@ $(function () {
   $('#editor').w2layout({
     name: 'editor',
     panels: [
-      { type: 'main', content: '<button onclick="javascript:runStatementUnderCursor();">Run?</button><button onclick="javascript:getTableMetaData();">tablemetadata</button><textarea id="code">select * from dual</textarea>',  resizable: true, size: 50},
+      { type: 'main', content: '<div class="toolbar"><button onclick="javascript:runStatementUnderCursor();" id="run" class="icon-play3">Run</button><button onclick="javascript:dfl.chooseFile(\'#fileDialog\');" id="open" class="icon-folder-open">Open</button><button onclick="javascript:dfl.saveFile(null);" id="save" class="icon-floppy-disk">Save</button><button onclick="javascript:dfl.saveAs();" id="saveAs">Save As...</button></div><!--button onclick="javascript:getTableMetaData();">tablemetadata</button--><textarea id="code">select * from dual</textarea>',  resizable: true, size: 50},
       { type: 'preview', content: 'preview', resizable: true, size: 500}
     ]
   });
@@ -53,11 +54,16 @@ $(function () {
     lineNumbers: true,
     matchBrackets : true,
     autofocus: true,
+    theme: 'neat',
     extraKeys: {
       'F9': runStatementUnderCursor
     , 'F10': runUpdateUnderCurrentCursor
     , 'F11': runExplianPlanUnderCurrentCursor
     },
+  });
+
+  editor.on("change", function() {
+    $('#save').removeClass().addClass('icon-floppy-disk').prop( "disabled", false );
   });
 
   //Set up schema view
@@ -123,7 +129,9 @@ $(function () {
           body    : '<textarea id="editorCM">' + escapeHtml(results[0][column.name].value) + '</textarea>',
           buttons : '<button disabled="disabled">Save</button><button onClick="javascript:w2popup.close();">Commit</button>',
           showClose: false,
-          modal: true
+          modal: true,
+          width: 1000,
+          height: 800
         });
         
         CodeMirror.fromTextArea(document.getElementById('editorCM'),{
@@ -133,6 +141,7 @@ $(function () {
           lineNumbers: true,
           matchBrackets : true,
           autofocus: true,
+          theme: 'neat'
         });
       });
     }
@@ -218,7 +227,55 @@ dfl = {
     w2ui[target].columns = columns;
     w2ui[target].records = data;
     w2ui[target].refresh();
-  }
+  },
+
+  chooseFile: function(name) {
+      var chooser = $(name);
+      chooser.unbind('change');
+      chooser.change(function(evt) {
+        currentFilePath = $(this).val();
+        fs.readFile($(this).val(),null,function(err,data){
+          if(err){
+            alert(err);
+          } else {
+            editor.getDoc().setValue(data.toString())
+          }
+        })
+      });
+
+      chooser.trigger('click');  
+    },
+
+    saveFile: function(path) {
+      if(path == null && currentFilePath != null) {
+        path = currentFilePath;
+        fs.writeFile(path, editor.getValue(), function(err) {
+            if(err) {
+                alert("error");
+            } else {
+              $('#save').removeClass().addClass('icon-checkmark').prop( "disabled", true );
+            }
+        });          
+      } else {
+        dfl.saveAs();
+      }  
+    },
+
+    saveAs: function() {
+      var chooser = $('#saveAs');
+      chooser.unbind('change');
+      chooser.change(function(evt) {
+        fs.writeFile($(this).val(), editor.getValue(), function(err) {
+            if(err) {
+                alert("error");
+            } else {
+              $('#save').removeClass().addClass('icon-checkmark').prop( "disabled", true );
+            }
+        });  
+      });
+
+      chooser.trigger('click');       
+    }
 };
 
 $(function () {

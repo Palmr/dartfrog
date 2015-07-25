@@ -1,4 +1,5 @@
 var gui = require('nw.gui');
+fs = require('fs');
 
 
 

@@ -7,9 +7,12 @@
 
     <link rel="stylesheet" type="text/css" href="node_modules/codemirror/lib/codemirror.css">
     <link rel="stylesheet" type="text/css" href="node_modules/codemirror/theme/neat.css"> 
+    <link rel="stylesheet" type="text/css" href="icomoon/icomoon.css"/> 
     <link rel="stylesheet" type="text/css" href="css/dartfrog.css"/>    
   </head>
   <body>
+    <input style="display:none;" id="fileDialog" type="file" accept=".sql,.txt"/>
+    <input style="display:none;" id="saveAs" type="file" nwsaveas />
     <div id="splash"></div>
     <div id="main-tabs"></div>
     <div id="editor" class="mode" style="width: 100%; height: calc(100% - 34px); position: absolute;"></div>
@@ -21,6 +24,6 @@
     <script src="connection-config.js" type="text/javascript"></script>
     <script src="dartfrog-jdbc.js" type="text/javascript"></script>
     <script src="dartfrog.js" type="text/javascript"></script>   
-    <script src="js/dartfrog-layout.js" type="text/javascript"></script>      
+    <script src="js/dartfrog-layout.js" type="text/javascript"></script>   
   </body>
 </html>

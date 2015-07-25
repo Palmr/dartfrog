@@ -65,6 +65,54 @@ html, body {
   width: 100%;
 }
 
+#tabs_mainTabs_tab_editor div:before {
+  font-family: icomoon;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  margin-right: 0.5em;  
+  content: "\e905";
+}
+
+#tabs_mainTabs_tab_schema div:before {
+  font-family: icomoon;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  margin-right: 0.5em;  
+  content: "\e9bc";
+}
+
+.toolbar {
+  border-bottom: 1px solid #eee;
+  background: #fdfdfd;
+}
+
+button {
+  border: 0;
+  font-size: 1.2em;
+  background: #fdfdfd;
+  color: #25A1D7;
+  padding: 0.5em 1.5em 0.7em 1em;
+  font-family: 'Segoe UI', sans-serif !important;
+  transition: opacity 0.5s;
+}
+
+button:disabled {
+  opacity: 0.3;
+}
+
+#run {
+   background: #009245;
+  color: #fff; 
+}
+
 .w2ui-grid {
   border: none;
 }
@@ -118,6 +166,7 @@ html, body {
 
 .w2ui-tabs {
     background-color: #fff;
+    border-bottom: 1px solid #eee;
 }
 
 .w2ui-tabs table {
@@ -132,6 +181,11 @@ html, body {
   border: none;
   border-bottom: 5px solid #25A1D7;
 }
+
+.w2ui-tabs .w2ui-tab:hover {
+  color: #25A1D7;
+}
+
 
 .w2ui-tabs .w2ui-tab {
   padding: 0.5em 2em;
@@ -149,11 +203,11 @@ html, body {
 }
 
 .w2ui-layout > div .w2ui-panel .w2ui-panel-content {
-  background-color: #fff;
+  background-color: #fdfdfd;
 }
 
 .w2ui-sidebar {
-  background-color: #fff !important;
+  background-color: #fdfdfd !important;
 }
 
 .w2ui-sidebar .w2ui-sidebar-div .w2ui-node {
@@ -168,6 +222,7 @@ html, body {
 .w2ui-sidebar .w2ui-sidebar-div .w2ui-node .w2ui-node-caption, .w2ui-sidebar .w2ui-sidebar-div .w2ui-node .w2ui-node-image, .w2ui-sidebar .w2ui-sidebar-div .w2ui-node .w2ui-node-image > span, .w2ui-sidebar .w2ui-sidebar-div .w2ui-node td.w2ui-node-dots {
   text-shadow: none !important;
   color: #333 !important;
+  font-size: 1.2em;
 }
 
 .w2ui-sidebar .w2ui-sidebar-div .w2ui-selected, .w2ui-sidebar .w2ui-sidebar-div .w2ui-selected:hover {
@@ -197,4 +252,46 @@ html, body {
 .w2ui-sidebar .w2ui-sidebar-div .w2ui-selected .w2ui-node-caption, .w2ui-sidebar .w2ui-sidebar-div .w2ui-selected:hover .w2ui-node-caption, .w2ui-sidebar .w2ui-sidebar-div .w2ui-selected .w2ui-node-image, .w2ui-sidebar .w2ui-sidebar-div .w2ui-selected:hover .w2ui-node-image, .w2ui-sidebar .w2ui-sidebar-div .w2ui-selected .w2ui-node-image > span, .w2ui-sidebar .w2ui-sidebar-div .w2ui-selected:hover .w2ui-node-image > span, .w2ui-sidebar .w2ui-sidebar-div .w2ui-selected td.w2ui-node-dots, .w2ui-sidebar .w2ui-sidebar-div .w2ui-selected:hover td.w2ui-node-dots {
   color: #333 !important;
   text-shadow: none !important;
+}
+
+.w2ui-node-dots:before {
+  font-family: icomoon;
+  content: "\ea70";
+  font-size: 16px;
+  margin-right: 0.5em;
+  color: #666;
+  vertical-align: bottom;
+}
+
+.w2ui-popup {
+  border-radius: 0;
+}
+
+.w2ui-popup .w2ui-msg-title {
+  background: #25A1D7;
+  color: #eee;
+  border-radius: 0;
+  font-size: 1.2em;
+  height: auto;
+  padding: 1em;
+  border-bottom: none;  
+}
+
+.w2ui-popup .w2ui-box1, .w2ui-popup .w2ui-box2 {
+  top: 3.6em;
+}
+
+.w2ui-popup .w2ui-msg-buttons {
+  background: #fdfdfd;
+  text-align: right;
+  padding: 0;
+  height: auto;
+}
+
+.w2ui-popup .w2ui-msg-body {
+  padding: 0;
+}
+
+.w2ui-popup .w2ui-box1, .w2ui-popup .w2ui-box2 {
+  bottom: 3.1em;
 }
